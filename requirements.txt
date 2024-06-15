@@ -1,0 +1,6 @@
+pandas
+nltk
+matplotlib
+wordcloud
+textblob
+duckdb
