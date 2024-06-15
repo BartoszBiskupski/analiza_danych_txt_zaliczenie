@@ -1,0 +1,4 @@
+.venv
+cryptonews_source.csv
+cryptonews.csv
+twarc.log
