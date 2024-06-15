@@ -9,7 +9,7 @@ from wordcloud import WordCloud
 from textblob import TextBlob
 import re
 import logging
-
+from collections import Counter
 import duckdb
 
 
@@ -160,6 +160,20 @@ class TextAnalysis:
         plt.show()
         plt.close()
 
+    def top_words_barchart(self):
+        word_counts = Counter(self.all_words)
+        top_words = word_counts.most_common(10)
+
+        words, counts = zip(*top_words)
+        plt.bar(words, counts)
+        plt.title('Top 10 Most Frequent Words')
+        plt.xlabel('Words')
+        plt.ylabel('Frequency')
+        plt.xticks(rotation=45)
+        self.pdf_pages.savefig()
+        plt.show()
+        plt.close()
+
     def sentiment_analysis(self, text):
         analysis = TextBlob(text)
         sentiment = analysis.sentiment.polarity
@@ -199,6 +213,7 @@ class TextAnalysis:
         self.combine_all_words()
         with PdfPages(f'{self.project_name}.pdf') as self.pdf_pages:
             self.create_wordcloud()
+            self.top_words_barchart()
             self.sentiment_visualization()
             self.sentiment_time_series()
         logging.info('Text analysis completed')
